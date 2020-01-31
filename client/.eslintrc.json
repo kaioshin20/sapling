@@ -1,0 +1,19 @@
+{
+  "extends": ["react-app", "plugin:prettier/recommended"],
+  "env": {
+    "browser": true,
+    "es2020": true
+  },
+  "rules": {
+    // "additional-rule": "warn"
+    "no-console": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts?(x)"],
+      "rules": {
+        // "additional-typescript-only-rule": "warn"
+      }
+    }
+  ]
+}

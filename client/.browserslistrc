@@ -1,0 +1,17 @@
+[production]
+defaults
+cover 99% in IN
+IE 11
+
+[development]
+last 1 chrome version
+last 1 firefox version
+last 1 safari version
+
+[ssr]
+node 12
+
+# some usefull links
+# browserlist: https://github.com/browserslist/browserslist
+# .browserlistrc formate: https://github.com/browserslist/browserslist#full-list
+# browserl.ist (https://browserl.ist/) is an online tool to check what browsers will be selected by some query
