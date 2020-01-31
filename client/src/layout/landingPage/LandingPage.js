@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Footer from '../common/footer/Footer'
+// import Footer from '../common/footer/Footer'
 import CSS from './LandingPage.module.css'
 import '../../assets/forest.jpg'
 import '../../assets/plants.jpg'
@@ -44,7 +44,6 @@ class LandingPage extends Component {
             </div>
           </div>
         </section>
-        <Footer />
       </div>
     )
   }
