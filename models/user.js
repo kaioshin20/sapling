@@ -38,7 +38,6 @@ const UserSchema=new mongoose.Schema({
         default:"local"
     },
     location:String,
-    availability:String,
     contact:Number,
     notifications:[
     	{

@@ -3,6 +3,8 @@ const express             = require("express"),
       request             = require("request"),
       Event               = require("../models/event"),
       User                = require("../models/user"),
+      Location            = require("../models/location"),
+      Plant               = require("../models/plant"),
       middleware          = require("../middleware/verify"),
       {cloudinary,upload} = require("../utils/cloudinary");
 
@@ -41,22 +43,20 @@ router.get("/",async function(req,res){
 
 router.get("/event/:id",(req,res)=>{
     let event = Event.findById(req.params.id);
-    request(url,(err,response)=>{
+    let location = Location.find().where("place").equals(event.location);     
+    const lat = location.lat;
+    const long = location.long;
+    var options = {
+        'method': 'GET',
+        'url': `https://api.airvisual.com/v2/nearest_city?lat=${lat}&lon=${long}&key=db146a1a-9603-46cc-a580-95abaae0b5d3`,
+        'headers': {
+        }
+    };
+    request(options,(err, response)=> { 
         if(err){
             console.log(err);
         }
-        const lat = response.lat;
-        const long = response.long;
-        var options = {
-            'method': 'GET',
-            'url': `https://api.airvisual.com/v2/nearest_city?lat=${lat}&lon=${long}&key=db146a1a-9603-46cc-a580-95abaae0b5d3`,
-            'headers': {
-            }
-        };
-        request(options,(err, response)=> { 
-            if(err){
-                console.log(err);
-            }
+        else{
             let data;
             data.tp=response.data.location.current.weather.tp;
             data.hu=response.data.location.current.weather.hu;
@@ -64,14 +64,20 @@ router.get("/event/:id",(req,res)=>{
             data.tp=response.data.location.current.weather.tp;
             data.aqius=response.data.location.current.pollution.aqius;
             data.mainus=response.data.location.current.pollution.mainus;
-            res.json({event,data});
-        });
-    })
+            let plants;
+            if(data.aqius<100)
+                plants = Plant.find().where("aqi").equals(false);
+            else{
+                plants= Plant.find().where("aqi").equals(true);
+            }
+            res.json({event,data,plants});                       
+        }
+    });
 })
 
-// router.get("/event/:id/interested",(req,res)=>{
-//     let event = Event.findById(req.params.id);
-
-// })
+router.get("/event/:id/interested",(req,res)=>{
+    let event = Event.findById(req.params.id);
+    
+})   
 
 module.exports=router;

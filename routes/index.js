@@ -18,14 +18,14 @@ router.get("/register",(req,res)=>{
 //REGISTER LOGIC ROUTE
 router.post("/register",async function(req,res){
     try{
-        var salt = await bcrypt.genSaltSync(10);
-        var hash = await bcrypt.hashSync(req.body.password, salt);
+        let salt = bcrypt.genSaltSync(10);
+        let hash = bcrypt.hashSync(req.body.password, salt);
         let user = await User.create({
-            firstName:req.body.firstname,
-            lastName:req.body.lastname,
-            displayName:req.body.firstname + " " + req.body.lastname,
+            displayName:req.body.name,
             email:req.body.email,
             password:hash,
+            location:req.body.location,
+            contact:req.body.contact,
             image:"https://res.cloudinary.com/image-storage/image/upload/v1572009434/blank-avatar_opbhgx.png"
         }); 
 
