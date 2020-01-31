@@ -17,6 +17,10 @@ const eventSchema = new mongoose.Schema({
         type:Date,
         default:Date.now
     },
+    interested:[{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
+    }],
     eventDate:Date,
     minPeople:Number,
     timePeriod:String,

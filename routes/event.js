@@ -75,9 +75,11 @@ router.get("/event/:id",(req,res)=>{
     });
 })
 
-router.get("/event/:id/interested",(req,res)=>{
+router.get("/event/:id/interested", middleware.isLoggedIn,(req,res)=>{
     let event = Event.findById(req.params.id);
-    
-})   
+    let userid = req.user._id;
+    event.interested.push(userid);
+    res.json({status: "200"});
+})
 
 module.exports=router;
