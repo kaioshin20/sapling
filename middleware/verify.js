@@ -1,4 +1,4 @@
-const Event     = require("../models/blog");
+const Event     = require("../models/event");
 
 let middlewareObj={};
 
