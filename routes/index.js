@@ -6,14 +6,14 @@ const express      = require("express"),
       googleAuth   = require("./auth/google"),
       facebookAuth = require("./auth/facebook");
       
-router.get("/",(req,res)=>{
-    res.redirect("/events"); 
-});
+// router.get("/",(req,res)=>{
+//     res.redirect("/events"); 
+// });
 
 //SHOW REGISTER FORM
-router.get("/register",(req,res)=>{
-    res.render("register");
-});
+// router.get("/register",(req,res)=>{
+//     res.render("register");
+// });
 
 //REGISTER LOGIC ROUTE
 router.post("/register",async function(req,res){
@@ -30,32 +30,30 @@ router.post("/register",async function(req,res){
         }); 
 
         req.logIn(user,function(err){  
-            res.redirect("/events");
+            res.status(200).send({user});
         });                   
     }
     catch(err){
         req.flash("error","This Email is already registered");
-        res.redirect("/register");
+        res.status(505);
     }    
 });
 
 //SHOW LOGIN FORM
-router.get("/login",(req,res)=>{
-    res.render("login");
-});
+// router.get("/login",(req,res)=>{
+//     res.render("login");
+// });
 
 //LOCAL LOGIN LOGIC ROUTE
-router.post("/login",passport.authenticate("local",{ 
-        failureRedirect:"/login",
-        failureFlash:"Invalid email or password"
-    }),(req,res)=>{
-        res.redirect("/events");
+router.post("/login",passport.authenticate("local"),(req,res)=>{
+    let userInfo = req.user;    
+    res.status(200).send(userInfo);
 });
  
 //LOGOUT ROUTE
 router.get("/logout",(req,res)=>{
     req.logOut();
-    res.redirect("/login");
+    res.status(200);
 });
 
 googleAuth(router);
