@@ -1,0 +1,56 @@
+header {
+  background-color: rgb(97, 171, 255);
+  font-size: 2em;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding: 10px;
+  box-shadow: 2px 6px 6px rgb(84, 151, 226);
+}
+
+.subscript {
+  font-size: 0.5em;
+}
+
+.logout {
+  position: absolute;
+  right: 10px;
+  padding: 5px;
+}
+
+h1 {
+  border: 1px solid rgb(223, 255, 174);
+  border-radius: 50px;
+  background-color: rgb(223, 255, 174);
+  padding: 10px;
+  width: max-content;
+  margin: 0 auto;
+}
+
+.card {
+  padding: 20px;
+  border: 1px solid gainsboro;
+  min-width: 25%;
+  max-width: 75%;
+  margin: 10px auto;
+  box-shadow: 2px 2px 2px rgb(150, 150, 150);
+  background-color: rgb(223, 255, 174);
+}
+
+.left {
+  padding: 50px;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  font-size: 1.5em;
+  margin: 5px;
+}
+
+img {
+  position: relative;
+  right: 100px;
+
+  height: 400px;
+}

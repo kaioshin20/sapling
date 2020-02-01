@@ -7,6 +7,7 @@ import SignIn from './layout/signIn/SignIn'
 import SignUp from './layout/signUp/SignUp'
 import Dashboard from './layout/dashboard/DashBoard'
 import UserContext from './contextStore/usercontext'
+import Events from './layout/Events/Events'
 
 class App extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class App extends Component {
           <Route path="/login" exact component={SignIn} />
           <Route path="/signup" exact component={SignUp} />
           <Route path="/dashboard" exact component={Dashboard} />
+          <Route path="/events" exact component={Events} />
         </UserContext.Provider>
       </div>
     )
