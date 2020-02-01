@@ -8,10 +8,6 @@ const express             = require("express"),
       middleware          = require("../middleware/verify"),
       {cloudinary,upload} = require("../utils/cloudinary");
 
-router.get("/create",middleware.isLoggedIn,(req,res)=>{
-
-})
-
 //CREATING NEW EVENT
 router.post("/" ,middleware.isLoggedIn,upload.single("image"),async function(req,res){
     try{
@@ -20,24 +16,23 @@ router.post("/" ,middleware.isLoggedIn,upload.single("image"),async function(req
         req.body.event.imageId = result.public_id;
         req.body.event.admin = req.user._id;
         let event=await Event.create(req.body.blog);
-        res.redirect(`/event/$(event.id)`);
+        res.status(200).send(event);
     } catch(err) {
-        req.flash("error", err.message);
-        res.redirect("back");
+        res.status(500);
     }
 });
 
 //SHOW EITHER ALL BLOGS ON INDEX PAGE OR ON THE BASIS OF SEARCH RESULTS
 router.get("/",async function(req,res){
     try{
-        let oldEvents=await Events.find().where("eventDate"-Date.now<=0).sort("-_id").exec();
-        let futureEvents=await Events.find().where("eventDate"-Date.now>=0).sort("-_id").exec();
+        let oldEvents=await Events.find().where("eventDate").lt(Date.now).sort("-_id").exec();
+        let futureEvents=await Events.find().where("eventDate").gt(Date.now).sort("-_id").exec();
         let currentUser= await User.findById(req.user._id);
         let users=await User.find().where("location").equals(currentUser.location);
-        res.json({oldEvents,futureEvents,users});
+        res.status(200).send({oldEvents,futureEvents,users});
     }
     catch(err){
-        res.redirect("back");
+        res.status(404);
     }
 })
 
@@ -70,14 +65,15 @@ router.get("/event/:id",(req,res)=>{
             else{
                 plants= Plant.find().where("aqi").equals(true);
             }
-            res.json({event,data,plants});                       
+            res.status(200).send({event,data,plants});                       
         }
     });
 })
 
-router.get("/event/:id/interested",(req,res)=>{
+router.put("/event/:id/interested",middleware.isLoggedIn,(req,res)=>{
     let event = Event.findById(req.params.id);
-    
+    event.interestedUsers.push(req.user._id);
+    event.save();
 })   
 
 module.exports=router;
