@@ -1,9 +1,19 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import UserContext from '../../contextStore/usercontext'
 import css from './DashBoard.module.css'
 
 class Dashboard extends Component {
+  componentDidMount() {
+    axios
+      .get(`http://localhost:5000/events/5e34eee41c9d440000e3a364`)
+      .then(res => {
+        const person = res.data
+        console.log(person)
+      })
+  }
+
   static contextType = UserContext
 
   render() {

@@ -48,9 +48,15 @@ li {
   margin: 5px;
 }
 
-img {
+.right img {
   position: relative;
   right: 100px;
-
+  width: 400px;
   height: 400px;
+}
+
+.people {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
 }

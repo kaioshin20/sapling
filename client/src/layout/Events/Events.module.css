@@ -1,0 +1,19 @@
+.header {
+  max-width: 75%;
+  min-width: 25%;
+  margin: 0 auto;
+}
+
+img {
+  width: 100%;
+}
+
+.subtitle {
+  text-align: center;
+}
+
+.container {
+  max-width: 75%;
+  min-width: 25%;
+  margin: 0 auto;
+}
