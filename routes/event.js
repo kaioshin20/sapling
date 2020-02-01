@@ -70,10 +70,19 @@ router.get("/event/:id",(req,res)=>{
     });
 })
 
+<<<<<<< HEAD
 router.put("/event/:id/interested",middleware.isLoggedIn,(req,res)=>{
     let event = Event.findById(req.params.id);
     event.interestedUsers.push(req.user._id);
     event.save();
 })   
+=======
+router.get("/event/:id/interested", middleware.isLoggedIn,(req,res)=>{
+    let event = Event.findById(req.params.id);
+    let userid = req.user._id;
+    event.interested.push(userid);
+    res.json({status: "200"});
+})
+>>>>>>> 938558f2715b30bfc994693c3edd40111fed1ce7
 
 module.exports=router;
