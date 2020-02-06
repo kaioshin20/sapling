@@ -9,7 +9,8 @@ module.exports = passport =>{
         },
         (email, password, done)=> {
           User.findOne({ email },(err, user)=>{
-            if (err) { return done(err); }
+            if (err) { 
+              return done(err); }
   
             if (!user) {
               return done(null, false, { message: "Email not registered" });
@@ -21,11 +22,13 @@ module.exports = passport =>{
               });
             }
             
-            bcrypt.compareSync(password, user.password,(err, result)=>{
-              if(err) return done(err);
+            bcrypt.compare(password,user.password,(err, result)=>{
+              if(err) {
+                return done(err);}
 
-              if(result) return done(null, user);
-
+              if(result){
+               return done(null, user);
+              }    
               else return done(null, false, { message: "Incorrect password." });
 
             });

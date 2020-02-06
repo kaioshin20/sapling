@@ -17,7 +17,6 @@ module.exports = app =>{
     app.use(passport.session());
 
     //LOCAL STRATEGY CONFIGURATION
-    // passport.use(new LocalStrategy(User.authenticate()));
     local(passport);
 
     // google(passport);

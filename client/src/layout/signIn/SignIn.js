@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 
 import CSS from './SignIn.module.css'
 import SignUpIN from '../common/SignUpIn/SignUpIn'
@@ -17,20 +18,24 @@ class SignIn extends Component {
 
   onClickHandler(e) {
     e.preventDefault()
-    console.log(this.state)
+    console.log(this.state);
     // do fetch command here to backend
-
-    // call this in a then
-    console.log(this.context)
-    this.context.valueChanger({
-      user: {
-        name: 'Yash HAnda',
-        email: 'yashhanda7',
-        location: 'test',
-        contactNo: '1234'
-      }
-    })
-    this.props.history.push('/dashboard')
+    axios
+      .post(`http://localhost:5000/login`, {
+        email: this.state.email,
+        password: this.state.password
+      })
+      .then(res => {
+        const person = res.data
+        console.log(person)
+        this.context.valueChanger({
+          user: person
+        })
+        this.props.history.push('/dashboard')
+      })
+      .catch(err=>{
+        console.log(err);
+      })
   }
 
   onChangeHandle(e) {

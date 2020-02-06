@@ -1,10 +1,10 @@
-const express               = require("express"),
-      app                   = express(),
-      bodyParser            = require("body-parser"),
-      mongoose              = require("mongoose"),
-      cors                  = require("cors"),
-      methodOverride        = require("method-override"),
-      middleware            = require("./middleware/index");
+const express = require("express"),
+  app         =  express(),
+  bodyParser  = require("body-parser"),
+  mongoose    = require("mongoose"),
+  cors        = require("cors"),
+  methodOverride = require("method-override"),
+  middleware  = require("./middleware/index");
 
 require("dotenv").config();
 
@@ -15,12 +15,12 @@ const indexRoute         = require("./routes/index");
     //   userRoute          = require("./routes/user"),
     //   notificationRoute  = require("./routes/notification");
 
-mongoose.connect(process.env.DATABASEURL,{ useUnifiedTopology: true ,useNewUrlParser:true});
-mongoose.set("useFindAndModify",false);
-mongoose.set("useCreateIndex",true);
+mongoose.connect(process.env.DATABASEURL, {useUnifiedTopology: true,useNewUrlParser: true});
+mongoose.set("useFindAndModify", false);
+mongoose.set("useCreateIndex", true);
 
-app.set("view engine","ejs");
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 app.use(methodOverride("_method"));
 app.use(cors());
 
@@ -32,7 +32,7 @@ app.use("/",indexRoute);
 // app.use("/user",userRoute);
 // app.use("/notification",notificationRoute);
 
-app.listen(process.env.PORT||5000)
+app.listen(process.env.PORT || 5000);
 {
-    console.log("Server has started");
+  console.log("Server has started");
 }
