@@ -1,15 +1,10 @@
 const express      = require("express"),
       router       = express.Router(),
-      bcrypt       = require("bcrypt"),
+      bcrypt       = require("bcryptjs"),
       crypto       = require("crypto"),
       async        = require("async"),
       User         = require("../models/user"),
       email        = require("./auth/email");
-
-//SHOW FORM FOR FORGOT PASSWORD
-router.get("/forgot",(req, res)=> {
-    res.render("forgot");
-});
 
 //ROUTE FOR SENDING MAIL WITH RESET PASSWORD LINK
 router.post("/forgot",(req, res, next)=> {
@@ -23,8 +18,11 @@ router.post("/forgot",(req, res, next)=> {
       function(token, done) {
         User.findOne({ email: req.body.email },(err, user)=> {
           if (!user) {
-            req.flash("error", "No account with that email address exists");
-            return res.redirect("/forgot");
+            return res.status(200).send({
+                error:"error",
+                message:"No account with that email address exists", 
+                to:"forgot"
+            });
           } 
           user.resetPasswordToken = token;
           user.resetPasswordExpires = Date.now() + 3600000; // 1 hour

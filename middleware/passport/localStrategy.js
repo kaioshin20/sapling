@@ -21,7 +21,7 @@ module.exports = passport =>{
               });
             }
             
-            bcrypt.compare(password, user.password,(err, result)=>{
+            bcrypt.compareSync(password, user.password,(err, result)=>{
               if(err) return done(err);
 
               if(result) return done(null, user);

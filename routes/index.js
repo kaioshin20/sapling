@@ -10,10 +10,9 @@ const express      = require("express"),
 //     res.redirect("/events"); 
 // });
 
-//SHOW REGISTER FORM
-// router.get("/register",(req,res)=>{
-//     res.render("register");
-// });
+router.get("/register",(req,res)=>{
+    res.render("register");
+})
 
 //REGISTER LOGIC ROUTE
 router.post("/register",async function(req,res){
@@ -28,21 +27,16 @@ router.post("/register",async function(req,res){
             contact:req.body.contact,
             image:"https://res.cloudinary.com/image-storage/image/upload/v1572009434/blank-avatar_opbhgx.png"
         }); 
-
-        req.logIn(user,function(err){  
-            res.status(200).send({user});
-        });                   
+        console.log(user);
+        res.send({user});
+        // req.logIn(user,function(err){  
+        //     res.status(200).send({user});
+        // });                   
     }
     catch(err){
-        req.flash("error","This Email is already registered");
         res.status(505);
     }    
 });
-
-//SHOW LOGIN FORM
-// router.get("/login",(req,res)=>{
-//     res.render("login");
-// });
 
 //LOCAL LOGIN LOGIC ROUTE
 router.post("/login",passport.authenticate("local"),(req,res)=>{
@@ -56,7 +50,7 @@ router.get("/logout",(req,res)=>{
     res.status(200);
 });
 
-googleAuth(router);
-facebookAuth(router);
+// googleAuth(router);
+// facebookAuth(router);
 
 module.exports=router;

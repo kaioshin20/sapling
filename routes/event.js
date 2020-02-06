@@ -22,19 +22,18 @@ router.post("/" ,middleware.isLoggedIn,upload.single("image"),async function(req
     }
 });
 
-//SHOW EITHER ALL BLOGS ON INDEX PAGE OR ON THE BASIS OF SEARCH RESULTS
 router.get("/",async function(req,res){
     try{
         let oldEvents=await Events.find().where("eventDate").lt(Date.now).sort("-_id").exec();
         let futureEvents=await Events.find().where("eventDate").gt(Date.now).sort("-_id").exec();
-        let currentUser= await User.findById(req.user._id);
-        let users=await User.find().where("location").equals(currentUser.location);
-        res.status(200).send({oldEvents,futureEvents,users});
+        // let currentUser= await User.findById(req.user._id);
+        // let users=await User.find().where("location").equals(currentUser.location);
+        res.status(200).send({oldEvents,futureEvents});
     }
     catch(err){
         res.status(404);
     }
-})
+})  
 
 router.get("/event/:id",(req,res)=>{
     let event = Event.findById(req.params.id);
@@ -70,19 +69,11 @@ router.get("/event/:id",(req,res)=>{
     });
 })
 
-<<<<<<< HEAD
 router.put("/event/:id/interested",middleware.isLoggedIn,(req,res)=>{
     let event = Event.findById(req.params.id);
     event.interestedUsers.push(req.user._id);
     event.save();
+    res.status(200).send(event);
 })   
-=======
-router.get("/event/:id/interested", middleware.isLoggedIn,(req,res)=>{
-    let event = Event.findById(req.params.id);
-    let userid = req.user._id;
-    event.interested.push(userid);
-    res.json({status: "200"});
-})
->>>>>>> 938558f2715b30bfc994693c3edd40111fed1ce7
 
 module.exports=router;

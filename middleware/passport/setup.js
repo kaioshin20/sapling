@@ -20,9 +20,9 @@ module.exports = app =>{
     // passport.use(new LocalStrategy(User.authenticate()));
     local(passport);
 
-    google(passport);
+    // google(passport);
 
-    facebook(passport);
+    // facebook(passport);
 
     passport.serializeUser((user, done)=> {
         done(null, user._id);
